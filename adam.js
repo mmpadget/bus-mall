@@ -17,14 +17,14 @@ var allProducts = [];
 var currentlyShowing = [];
 
 //Store all image names in an array
-var picNames = ['bag', 'banana', 'bathroom', 'boots', 'bubblegum', 'chair'];
+var picNames = ['bag', 'banana', 'bathroom', 'boots', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 
 //Define the Product Constructor. Started with this.
 function Product(name) {
   this.name = name;
   this.views = 0;
   this.clicks = 0;
-  this.path = 'img/' + 'name' + '.jpg';
+  this.path = 'img/' + name + '.jpg'; // Doesn't account for PNG or GIF.
 }
 // Alternate: parameter
 // function Product(name, imgNumber) {
@@ -66,6 +66,59 @@ function displayPics() {
   var centerIndex = randNum();
   var rightIndex = randNum();
 
+  // All indexes are unique at this point.
+
+  // grab indexes
+  // var leftProduct = allProducts[leftIndex];
+  // leftProduct.views += 1; // Increment views.
+  // var centerProduct = allProducts[centerIndex];
+  // leftProduct.views += 1; // Increment views.
+  // var rightProduct = allProducts[rightIndex];
+  // leftProduct.views += 1; // Increment views.
+
+  // Update the views. allProducts is an empty constructor array.
+  var leftProduct = allProducts[leftIndex];
+  leftProduct.views += 1;
+
+  var centerProduct = allProducts[centerIndex];
+  centerProduct.views += 1;
+
+  var rightProduct = allProducts[rightIndex];
+  rightProduct.views += 1;
+
+  // create new element of image. Grabbed pic container at top. Nodes from DOM.
+  picContainer.removeChild(left);
+  left = document.createElement('img');
+  // left.src = leftProduct.path; // Bad practice because you have set attribute.
+  left.setAttribute('src', leftProduct.path);
+  left.setAttribute('alt', leftProduct.name);
+  picContainer.appendChild(left);
+
+  picContainer.removeChild(center);
+  center = document.createElement('img');
+  center.setAttribute('src', centerProduct.path);
+  center.setAttribute('alt', centerProduct.name);
+  picContainer.appendChild(center);
+
+  picContainer.removeChild(right);
+  right = document.createElement('img');
+  right.setAttribute('src', rightProduct.path);
+  right.setAttribute('alt', rightProduct.name);
+  picContainer.appendChild(right);
+
+  // // one array with all products, and one with currently showing.
+  // // 2, 1, 4 example. 4, 1, 8 on second pass.
+  // // hold on to these values in the array for the next pass.
+  currentlyShowing = [leftIndex, centerIndex, rightIndex];
+  // // Reassigning "currently showing" to be the new values. Don't want to push. Compare to previous 3 values. Could reset the array.
+  // console.log('currently showing ', currentlyShowing);
+
+  // Alternate. If empty
+  // currentlyShowing = [];
+  // currentlyShowing.push(leftIndex);
+  // currentlyShowing.push(centerIndex);
+  // currentlyShowing.push(rightIndex);
+
   console.log('Starting Left Index: ', leftIndex);
   console.log('Starting Center Index: ', centerIndex);
   console.log('Starting Right Index: ', rightIndex);
@@ -99,44 +152,10 @@ function displayPics() {
   }
 }
 
-// All indexes are unique at this point.
-
-// grab indexes
-var leftProduct = allProducts[leftIndex];
-leftProduct.views += 1; // Increment views.
-
-// create new element of image. Grabbed pic container at top. Nodes from DOM.
-picContainer.removeChild(left);
-left = document.createElement('img');
-// left.src = leftProduct.path; // Bad practice because you have set attribute.
-left.setAttribute('src', leftProduct.path);
-left.setAttribute('alt', leftProduct.name);
-picContainer.appendChild(left);
-
-picContainer.removeChild(center);
-center = document.createElement('img');
-
-// Update the views.
-var rightProduct = allProducts[rightIndex];
-rightProduct.views += 1;
-
-// one array with all products, and one with currently showing.
-// 2, 1, 4 example. 4, 1, 8 on second pass.
-// hold on to these values in the array for the next pass.
-currentlyShowing = [leftIndex, centerIndex, rightIndex];
-// Reassigning "currently showing" to be the new values. Don't want to push. Compare to previous 3 values. Could reset the array.
-console.log('currently showing ', currentlyShowing);
-
-// Alternate. If empty
-// currentlyShowing = [];
-// currentlyShowing.push(leftIndex);
-// currentlyShowing.push(centerIndex);
-// currentlyShowing.push(rightIndex);
-
 // handle user clicks. click on margin, alert.
 function handlePicContainerClick() {
   if(event.target.id === 'pic-container') {
-    return alert('Sup');
+    return alert('Click on a picture!');
   }
 
   if (totalClicks < clickLimit) {
@@ -145,9 +164,11 @@ function handlePicContainerClick() {
     totalClicks++;
 
     console.log(event.target.alt + ' was clicked');
+
     for (var i = 0; i < allProducts.length; i++) {
-      if (event.target.alt === allProducts[index].name) {
-        allProducts[index].clicks += 1;
+      // if (event.target.alt === allProducts[index].name) {
+      if (event.target.alt === allProducts[i].name) {
+        allProducts[i].clicks += 1;
       }
     }
   } else {
@@ -157,6 +178,7 @@ function handlePicContainerClick() {
 
 function displayList() {
   for (var i = 0; i < allProducts.length; i++) {
+    var picList = document.getElementById('picList');
     var liEl = document.createElement('li');
     liEl.textContent = allProducts[i].name + ' has been clicked ' + allProducts[i].clicks + ' times';
     picList.appendChild(liEl);
@@ -164,5 +186,4 @@ function displayList() {
 }
 
 picContainer.addEventListener('click', handlePicContainerClick);
-var picList = document.getElementById('picList');
 displayPics();
