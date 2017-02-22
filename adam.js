@@ -57,6 +57,23 @@ function randNum() {
   return Math.floor(Math.random() * allProducts.length);
 }
 
+// function displayPics() {
+//   generateRandomIndices();
+//   drawPicturesFromIndices();
+// }
+
+// ASIDE: exercise with Fraiser to return values from function and solve scoping issues.
+// function generateRandomIndices() {
+//   var pictureIndices = []; // A number index for images.
+//   while (pictureIndices.length < 3) {
+//     var tempRandNum = randNum(); // Store a random number in a new variable.
+//     if (pictureIndices.indexOf(tempRandNum) === -1) {
+//       pictureIndices.push(tempRandNum);
+//     }
+//   }
+//   return pictureIndices; // Can be used as future storage to access a function.
+// }
+
 // First make sure there are no duplicate images.
 // the primary function to display new images.
 // Adam organizes this way to follow the hoisting process.
