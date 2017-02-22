@@ -1,0 +1,16 @@
+#pic-container {
+  width: 75%;
+  height: 75%;
+  border: 2px solid blue;
+  margin: 20px;
+  background-color: grey;
+}
+
+img {
+  /*width: 400px;*/
+  width: 25%;
+  border: 2px solid black;
+  margin: 20px;
+  background-color: lightblue;
+  /*display: inline-block;*/
+}
