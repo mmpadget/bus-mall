@@ -204,3 +204,73 @@ function displayList() {
 
 picContainer.addEventListener('click', handlePicContainerClick);
 displayPics();
+
+// Begin Chart. display your vote totals in a bar chart
+var ctx = document.getElementById('chart').getContext('2d'); // ctx = context.
+
+var data = [12, 4, 9, 3, 100, 55, 31]; // Seven data points, seven colors, one for each data point.
+var labelColors = ['blue', 'red', 'orange', 'purple', 'green', 'yellow', 'salmon'];
+
+// for (var i = 0; i < array.allProducts; i++) {
+//   var data = allProducts[i].clicks;
+//   var labelColors = allProducts[i].name;
+// }
+
+// Object literal - list of key value pairings, hand to constructor. Could do in the constructor as well.
+var chartData = {
+  type: 'bar', // Supports other types of charts. See documentation.
+  data: {
+    labels: labelColors, // Can be value of "data" as well. What strings to put under each value.
+    datasets: [{
+      label: '# of Votes / Color',
+      data: data,
+      backgroundColor: labelColors
+      // See docs, an array of one or more objects.
+    }],
+  }, // Another object 1 data. Could do this way, see below.
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  }, // Another object 2 options.
+};
+
+// Constructor for chart, but built into their framework.
+var myChart = new Chart(ctx, chartData); // Needs context and object for everything needed on the chart. See docs.
+
+// ##### Adam's example #####
+
+// var ctx = document.getElementById('chart').getContext('2d'); // ctx = context.
+//
+// var data = [12, 4, 9, 3, 100, 55, 31]; // Seven data points, seven colors, one for each data point.
+// var labelColors = ['blue', 'red', 'orange', 'purple', 'green', 'yellow', 'salmon'];
+//
+// // Object literal - list of key value pairings, hand to constructor. Could do in the constructor as well.
+// var chartData = {
+//   type: 'bar', // Supports other types of charts. See documentation.
+//   data: {
+//     labels: labelColors, // Can be value of "data" as well. What strings to put under each value.
+//     datasets: [{
+//       label: '# of Votes / Color',
+//       data: data,
+//       backgroundColor: labelColors
+//       // See docs, an array of one or more objects.
+//     }],
+//   }, // Another object 1 data. Could do this way, see below.
+//   options: {
+//     scales: {
+//       yAxes: [{
+//         ticks: {
+//           beginAtZero: true
+//         }
+//       }]
+//     }
+//   }, // Another object 2 options.
+// };
+//
+// // Constructor for chart, but built into their framework.
+// var myChart = new Chart(ctx, chartData); // Needs context and object for everything needed on the chart. See docs.

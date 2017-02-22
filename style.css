@@ -1,16 +1,60 @@
+body {
+  background-color: lightblue;
+}
+
+#heading {
+  width: 75%;
+  height: 100px;
+  background-color: white;
+  margin: 25px auto 25px auto;
+  padding-top: 1px;
+  text-align: center;
+}
+
 #pic-container {
   width: 75%;
-  height: 75%;
-  border: 2px solid blue;
-  margin: 20px;
-  background-color: grey;
+  height: 350px;
+  background-color: white;
+  margin: 25px auto 25px auto;
+  padding-top: 25px;
+  text-align: center;
+}
+
+h1 {
+  font-family: monospace;
+  font-size: 3em;
 }
 
 img {
-  /*width: 400px;*/
   width: 25%;
   border: 2px solid black;
-  margin: 20px;
-  background-color: lightblue;
-  /*display: inline-block;*/
+  margin: 10px;
+}
+
+#picList {
+  /*width: 75%;
+  height: 200px;
+  background-color: white;
+  margin: auto;
+  padding-top: 25px;
+  text-align: center;*/
+}
+
+#chart-format {
+  width: 75%;
+  height: 400px;
+  background-color: white;
+  margin: 25px auto 50px auto;
+  padding-top: 25px;
+  text-align: center;
+}
+
+canvas {
+  width: 75%;
+  /*background-color: white;*/
+  /*margin: auto;*/
+  /*padding: 25px;*/
+  /*text-align: center;
+  width: 75%;
+  min-width: 400px;*/
 }
