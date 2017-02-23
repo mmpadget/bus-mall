@@ -1,69 +1,170 @@
 'use strict';
 
-// Object.
-// var images = {
-//   imageName: ['R2 Bag', 'Banana Slicer', 'Bathroom Helper', 'Yellow Boots', 'Breakfast', 'Bubble Gum', 'Red Chair', 'Green Monster', 'Dog Duck', 'Dragon Meat', 'Utensil Pens', 'Pet Sweep', 'Pizza Scissors', 'Shark Bag', 'Kid Sweeper', 'Tauntaun Bag', 'Unicorn Meat', 'USB Tentacle', 'Watering Can', 'Wine Glass'],
-//   filePath: ['img/bag.jpg', 'img/banana.jpg', 'img/bathroom.jpg', 'img/boots.jpg', 'img/breakfast.jpg', 'img/bubblegum.jpg', 'img/chair.jpg', 'img/cthulhu.jpg', 'img/dog-duck.jpg', 'img/dragon.jpg', 'img/pen.jpg', 'img/pet-sweep.jpg', 'img/scissors.jpg', 'img/shark.jpg', 'img/sweep.png', 'img/tauntaun.jpg', 'img/unicorn.jpg', 'img/usb.gif', 'img/water-can.jpg', 'img/wine-glass.jpg'],
-//   imageIdTag: [],
-//   displayCount: 0, // Track how many times each image is displayed.
-//   clickCount: 0, // Track clicks for each image.
-//   votesCounter: 0,
-//   totalClicks: 0, // Track the total number of clicks made.
-// };
+var picContainer = document.getElementById('pic-container');
+var left = document.getElementById('left');
+var center = document.getElementById('center');
+var right = document.getElementById('right');
 
-// Constructor function associated with each image.
-function images(imageName, filePath, imageIdTag, displayCount, clickCount, votesCounter, totalClicks) {
-  this.imageName = ['R2 Bag', 'Banana Slicer', 'Bathroom Helper', 'Yellow Boots', 'Breakfast', 'Bubble Gum', 'Red Chair', 'Green Monster', 'Dog Duck', 'Dragon Meat', 'Utensil Pens', 'Pet Sweep', 'Pizza Scissors', 'Shark Bag', 'Kid Sweeper', 'Tauntaun Bag', 'Unicorn Meat', 'USB Tentacle', 'Watering Can', 'Wine Glass'];
-  this.filePath = ['img/bag.jpg', 'img/banana.jpg', 'img/bathroom.jpg', 'img/boots.jpg', 'img/breakfast.jpg', 'img/bubblegum.jpg', 'img/chair.jpg', 'img/cthulhu.jpg', 'img/dog-duck.jpg', 'img/dragon.jpg', 'img/pen.jpg', 'img/pet-sweep.jpg', 'img/scissors.jpg', 'img/shark.jpg', 'img/sweep.png', 'img/tauntaun.jpg', 'img/unicorn.jpg', 'img/usb.gif', 'img/water-can.jpg', 'img/wine-glass.jpg'];
-  this.imageIdTag = [];
-  this.displayCount = 0; // Track how many times each image is displayed.
-  this.clickCount = 0; // Track clicks for each image.
-  this.votesCounter = 0;
-  this.totalClicks = 0; // Track the total number of clicks made.
+var totalClicks = 0;
+var clickLimit = 25;
+
+var allProducts = [];
+
+var currentlyShowing = [];
+
+var picNames = ['bag', 'banana', 'bathroom', 'boots', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
+
+function Product(name) {
+  this.name = name;
+  this.views = 0;
+  this.clicks = 0;
+  this.path = 'img/' + name + '.jpg';
 }
 
-function createImageEl() {
-  for (var i = 0; i < filePath.length; i++) {
-    // // Create the image tag.
-    // var imgEl = document.createElement('img');
-    // imgEl.setAttribute('class', 'imageClass');
-    // imgEl.setAttribute('src', 'filePath');
-    // // imgEl.setAttribute('id', 'img-' + i);
-    // var allImgFiles = document.querySelectorAll('img');
-    // allImgFiles.appendChild(imageClass);
-    // // Where's the file path?
-    // // Insert the image into the page.
+for (var i = 0; i < picNames.length; i++) {
+  allProducts.push(new Product(picNames[i]));
+}
+
+function randNum() {
+  return Math.floor(Math.random() * allProducts.length);
+}
+
+function displayPics() {
+
+  var leftIndex = randNum();
+  var centerIndex = randNum();
+  var rightIndex = randNum();
+
+  console.log('Starting Left Index: ', leftIndex);
+  console.log('Starting Center Index: ', centerIndex);
+  console.log('Starting Right Index: ', rightIndex);
+
+  while (currentlyShowing.includes(leftIndex)) {
+    leftIndex = randNum();
+    console.log('new Left: ', leftIndex);
+  }
+
+  while (centerIndex === leftIndex || currentlyShowing.includes(centerIndex)) {
+    centerIndex = randNum();
+    console.log('new center: ', centerIndex);
+  }
+
+  while (rightIndex === leftIndex || rightIndex === centerIndex || currentlyShowing.includes(rightIndex)) {
+    rightIndex = randNum();
+    console.log('new right: ', rightIndex);
+  }
+
+  var leftProduct = allProducts[leftIndex];
+  leftProduct.views += 1;
+
+  var centerProduct = allProducts[centerIndex];
+  centerProduct.views += 1;
+
+  var rightProduct = allProducts[rightIndex];
+  rightProduct.views += 1;
+
+  picContainer.removeChild(left);
+  left = document.createElement('img');
+  left.setAttribute('src', leftProduct.path);
+  left.setAttribute('alt', leftProduct.name);
+  picContainer.appendChild(left);
+
+  picContainer.removeChild(center);
+  center = document.createElement('img');
+  center.setAttribute('src', centerProduct.path);
+  center.setAttribute('alt', centerProduct.name);
+  picContainer.appendChild(center);
+
+  picContainer.removeChild(right);
+  right = document.createElement('img');
+  right.setAttribute('src', rightProduct.path);
+  right.setAttribute('alt', rightProduct.name);
+  picContainer.appendChild(right);
+
+  currentlyShowing = [leftIndex, centerIndex, rightIndex];
+}
+
+function handlePicContainerClick() {
+
+  if (totalClicks < clickLimit) {
+    displayPics();
+
+    totalClicks++;
+
+    console.log(event.target.alt + ' was clicked');
+
+    for (var i = 0; i < allProducts.length; i++) {
+      if (event.target.alt === allProducts[i].name) {
+        allProducts[i].clicks += 1;
+      }
+    }
+  } else {
+    console.log('Here is click data: ' + allProducts);
+    displayList();
+    displayListPercent();
+    document.body.removeChild(picContainer);
+    saveProductsToLocalStorage(allProducts);
   }
 }
 
-// Select three random photos from the image directory.
-function selectRandomPhotos() {
-  console.log();
-  // Math.random
+function displayList() {
+  for (var i = 0; i < allProducts.length; i++) {
+    var picList = document.getElementById('picList');
+    var liEl = document.createElement('li');
+    liEl.textContent = allProducts[i].clicks + ' votes for the ' + allProducts[i].name + '.';
+    picList.appendChild(liEl);
+  }
 }
 
-// On click, automatically display three new non-duplicating random images.
-function checkNonDuplicated() {
-  console.log();
+function displayListPercent() {
+  for (var i = 0; i < allProducts.length; i++) {
+    var percentList = document.getElementById('picList');
+    var liEl = document.createElement('li');
+    liEl.textContent = allProducts[i].clicks + ' votes for the ' + allProducts[i].name;
+    percentList.appendChild(liEl);
+  }
 }
 
-function displayThreePhotos() {
-  console.log();
+picContainer.addEventListener('click', handlePicContainerClick);
+displayPics();
+
+// Saved Data
+
+function saveProductsToLocalStorage(allProducts) {
+  localStorage.allProducts = JSON.stringify(allProducts);
 }
 
-// Show results after a total of 25 selections made.
-if (clicksCount === 25) {
-// Turn off event listeners on the images after 25 selections have been made.
-  console.log();
+function allProductClicks(products){
+  var productClicks = [];
+
+  for (var i = 0; i < products.length; i++) {
+    productClicks.push(products[i].clicks);
+    console.log('test' + products.length);
+    console.log('All product clicks: ', productClicks);
+  }
+  return productClicks;
 }
 
-// Show the percentage of times that an item was clicked when it was shown.
-function clickResults() {
-  console.log();
+function allProductNames(products){
+  var productNames = [];
+
+  for (var i = 0; i < products.length; i++) {
+    productNames.push(products[i].name);
+    console.log('All product names: ', productNames);
+  }
+  return productNames;
 }
 
-// Display a list of the products with votes received with each list item.
-// Format the list items to look like "3 votes for the Banana Slicer".
-function listPhotoVotes() {
-  console.log();
+if (localStorage.allProducts) {
+  allProducts = JSON.parse(localStorage.allProducts);
+}
+
+//allProducts = JSON.parse(localStorage.allProducts);
+
+var clearListener = document.getElementById('clear-button');
+clearListener.addEventListener('click', clearChartData);
+
+function clearChartData(event) {
+  localStorage.clear();
+  console.log('Clear local storage was clicked');
 }
