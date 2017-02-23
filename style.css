@@ -13,7 +13,7 @@ body {
 
 #pic-container {
   width: 75%;
-  height: 350px;
+  /*height: 350px;*/
   background-color: white;
   margin: 25px auto 25px auto;
   padding-top: 25px;
@@ -31,6 +31,22 @@ img {
   margin: 10px;
 }
 
+a {
+
+}
+
+#page-link {
+  /*background-color: red;*/
+  text-align: center;
+}
+
+#page-button {
+  width: 75%;
+  margin: auto;
+  text-align: center;
+  padding-top: 25px;
+}
+
 #picList {
   /*width: 75%;
   height: 200px;
@@ -40,9 +56,19 @@ img {
   text-align: center;*/
 }
 
+ul {
+
+}
+
+#bullet-container {
+  width: 75%;
+  margin: auto;
+  background-color: white;
+}
+
 #chart-format {
   width: 75%;
-  height: 400px;
+  /*height: 400px;*/
   background-color: white;
   margin: 25px auto 50px auto;
   padding-top: 25px;
