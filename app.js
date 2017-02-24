@@ -7,6 +7,7 @@ var right = document.getElementById('right');
 
 var totalClicks = 0;
 var clickLimit = 25;
+var surveyTaken = 0;
 
 var allProducts = [];
 
@@ -100,29 +101,31 @@ function handlePicContainerClick() {
     }
   } else {
     console.log('Here is click data: ' + allProducts);
+    if (localStorage.getItem('surveyTaken') === null) {
+      surveyTaken = 0;
+    } else {
+      surveyTaken = localStorage.getItem('surveyTaken');
+    }
+    surveyTaken++;
+    console.log('Times survey taken: ' + surveyTaken);
     displayList();
-    displayListPercent();
     document.body.removeChild(picContainer);
     saveProductsToLocalStorage(allProducts);
   }
 }
 
 function displayList() {
+  var storeTotalPercent = 0;
   for (var i = 0; i < allProducts.length; i++) {
+    var calcPercentage = ((allProducts[i].clicks / clickLimit) * 100 / surveyTaken);
+    storeTotalPercent += calcPercentage;
+    console.log(surveyTaken);
     var picList = document.getElementById('picList');
     var liEl = document.createElement('li');
-    liEl.textContent = allProducts[i].clicks + ' votes for the ' + allProducts[i].name + '.';
+    liEl.textContent = allProducts[i].clicks + ' votes for the ' + allProducts[i].name + '. ' + calcPercentage.toFixed(1) + '%.';
     picList.appendChild(liEl);
   }
-}
-
-function displayListPercent() {
-  for (var i = 0; i < allProducts.length; i++) {
-    var percentList = document.getElementById('picList');
-    var liEl = document.createElement('li');
-    liEl.textContent = allProducts[i].clicks + ' votes for the ' + allProducts[i].name;
-    percentList.appendChild(liEl);
-  }
+  console.log(storeTotalPercent);
 }
 
 picContainer.addEventListener('click', handlePicContainerClick);
@@ -132,6 +135,7 @@ displayPics();
 
 function saveProductsToLocalStorage(allProducts) {
   localStorage.allProducts = JSON.stringify(allProducts);
+  localStorage.surveyTaken = surveyTaken;
 }
 
 function allProductClicks(products){
