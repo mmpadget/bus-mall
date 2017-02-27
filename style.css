@@ -2,36 +2,47 @@ body {
   background-color: lightblue;
 }
 
-#heading {
+.box-layout {
   width: 75%;
-  height: 100px;
   background-color: white;
   margin: 25px auto 25px auto;
-  padding-top: 1px;
+}
+
+#heading {
+  font-family: 'Libre Baskerville', serif;
+  height: 100px;
   text-align: center;
+  margin-top: 25px, auto, 25px;
+  border-top: 15px solid darkblue;
 }
 
 #pic-container {
-  width: 75%;
-  background-color: white;
-  margin: 25px auto 25px auto;
-  padding-top: 25px;
+  height: 300px;
   text-align: center;
 }
 
 h1 {
-  font-family: monospace;
   font-size: 3em;
+  position: relative;
+  bottom: 15px;
+
+}
+
+a {
+  font-family: 'Work Sans', sans-serif;
+  color: darkred;
 }
 
 img {
   width: 25%;
   border: 2px solid black;
   margin: 10px;
+  position: relative;
+  top: 50px;
 }
 
-a {
-
+li {
+  font-family: 'Work Sans', sans-serif;
 }
 
 #page-link {
@@ -47,14 +58,14 @@ a {
 
 #bullet-container {
   width: 75%;
-  margin: auto;
   background-color: white;
+  margin: 25px auto 25px auto;
 }
 
 #chart-format {
   width: 75%;
   background-color: white;
-  margin: 25px auto 50px auto;
+  margin: 25px auto 25px auto;
   padding-top: 25px;
   text-align: center;
 }
