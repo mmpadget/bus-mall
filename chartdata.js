@@ -2,7 +2,6 @@
 
 // Get values from saved data.
 function getProductsFromLocalStorage() {
-  //localStorage.allProducts = JSON.stringify(allProducts);
   var getAllThatJunk = localStorage.getItem('key');
   getAllThatJunk = JSON.parse(getAllThatJunk);
   console.log('Saved to localStorage!');
@@ -62,5 +61,5 @@ var chartData = {
 };
 console.log('This is click data ' + clickData);
 var myChart = new Chart(ctx, chartData);
-// randNum();
+
 getProductsFromLocalStorage();
