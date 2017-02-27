@@ -163,8 +163,6 @@ if (localStorage.allProducts) {
   allProducts = JSON.parse(localStorage.allProducts);
 }
 
-//allProducts = JSON.parse(localStorage.allProducts);
-
 var clearListener = document.getElementById('clear-button');
 clearListener.addEventListener('click', clearChartData);
 
